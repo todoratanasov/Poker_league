@@ -1,0 +1,21 @@
+{{#each events}}
+<div class="card mx-auto" style="width: 18rem;">
+  <img class="card-img-top" src="https://ichef.bbci.co.uk/news/660/cpsprodpb/BF00/production/_103469884_mercbbc.jpg"
+    alt="Card image cap">
+  <div class="card-body">
+    <p class="card-text">Next game will be on <strong>{{eventdate}}</strong> at <strong>{{time}}</strong> o'clock in
+      {{place}}'s residance. So far the players are:<br> {{#each newUsers}}<p class="card-text">{{this}}</p>{{/each}}
+
+      <br>
+      {{#if itParticipate}}
+      <span>You participate in this game.</span>
+      {{else}}
+      <span>You can participate by pressing the button "Participate".</span>
+      <form class="form-inline" action="/participate:{{_id}}" method="POST">
+        <button type="submit" class="btn btn-primary mb-2">Participate</button>
+      </form>
+      {{/if}}
+    </p>
+  </div>
+</div>
+{{/each}}

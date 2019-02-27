@@ -1,0 +1,45 @@
+const controllers = require('../controllers');
+const restrictedPages = require('./auth');
+
+module.exports = app => {
+    //home
+    app.get('/', controllers.home.index);
+
+    //standings
+    app.get('/standings', restrictedPages.isAuthed, controllers.standings.standingsGet)
+
+    //user
+    //register works only using URL and if logged as Admin
+    app.get('/register', restrictedPages.isAuthed, restrictedPages.hasRole('Admin'), controllers.user.registerGet);
+    app.post('/register', restrictedPages.isAuthed, restrictedPages.hasRole('Admin'), controllers.user.registerPost);
+
+    app.post('/logout', controllers.user.logout);
+    app.get('/login', controllers.user.loginGet);
+    app.post('/login', controllers.user.loginPost);
+
+    //review events
+    app.get('/upcomming', restrictedPages.isAuthed, controllers.events.eventsGet);
+
+    //add event
+    app.get('/addevent', restrictedPages.isAuthed, controllers.addEvent.addEventGet);
+    app.post('/addevent/post', restrictedPages.isAuthed, controllers.addEvent.addEventPost)
+
+    //participate in event
+    app.post('/participate:id', restrictedPages.isAuthed, controllers.events.participatePost)
+
+    //rules
+    app.get('/rules', controllers.rules.rulesGet);
+
+    //results
+    app.get('/results', restrictedPages.isAuthed, controllers.events.resultsFromEventsGet)
+    app.get('/results/insertresults:id', restrictedPages.isAuthed, controllers.events.insertResultsFromEventsGet);
+
+    //profile
+    app.get('/profile', restrictedPages.isAuthed, controllers.profile.profileGet)
+
+    app.all('*', (req, res) => {
+        res.status(404);
+        res.send('404 Not Found');
+        res.end();
+    });
+};

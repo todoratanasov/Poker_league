@@ -1,0 +1,12 @@
+{{#each user}}
+<form action="/results{{_id}}" method="POST">
+<div class="input-group event-form">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">{{firstName}} {{lastName}}</span>
+  </div>  
+  <input type="text" class="form-control" placeholder="Buy-in" name="buyIn">
+  <input type="text" class="form-control" placeholder="Cash-out" name="cashOut">
+  <button type="submit" class="btn btn-primary mb-0">Submit results</button>
+</div>
+</form>
+{{/each}}
