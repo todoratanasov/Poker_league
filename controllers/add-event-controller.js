@@ -18,7 +18,8 @@ module.exports = {
                 time,
                 creator: [creator],
                 users: [creator],
-                pastEvent:false
+                pastEvent:false,
+                participants:[],
             });
             res.redirect("/");
         } catch (err) {

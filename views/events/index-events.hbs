@@ -1,5 +1,6 @@
+<div class="d-flex justify-content-center">
 {{#each events}}
-<div class="card mx-auto" style="width: 18rem;">
+<div class="card mx-auto d-inline-block  transperant-background" style="width: 18rem;">
   <img class="card-img-top" src="https://ichef.bbci.co.uk/news/660/cpsprodpb/BF00/production/_103469884_mercbbc.jpg"
     alt="Card image cap">
   <div class="card-body">
@@ -12,10 +13,11 @@
       {{else}}
       <span>You can participate by pressing the button "Participate".</span>
       <form class="form-inline" action="/participate:{{_id}}" method="POST">
-        <button type="submit" class="btn btn-primary mb-2">Participate</button>
+        <button type="submit" class="btn btn-dark mb-2">Participate</button>
       </form>
       {{/if}}
     </p>
   </div>
 </div>
 {{/each}}
+</div>

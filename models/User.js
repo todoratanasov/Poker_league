@@ -9,7 +9,9 @@ const userSchema = new mongoose.Schema({
     salt: { type: mongoose.Schema.Types.String, required: true },
     event:[{type: mongoose.Schema.Types.ObjectId, ref:'Event'}],
     roles: [{ type: mongoose.Schema.Types.String }],
-    results:[{type:mongoose.Schema.Types.ObjectId, ref: "Result"}]
+    results:[{type:mongoose.Schema.Types.ObjectId, ref: "Result"}],
+    personalBalance:{type:mongoose.Schema.Types.Number, default:0},
+    totalBuyIn:{type:mongoose.Schema.Types.Number, default:0}
 });
 
 userSchema.method({

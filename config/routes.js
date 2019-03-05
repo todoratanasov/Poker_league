@@ -33,10 +33,17 @@ module.exports = app => {
     //results
     app.get('/results', restrictedPages.isAuthed, controllers.events.resultsFromEventsGet)
     app.get('/results/insertresults:id', restrictedPages.isAuthed, controllers.events.insertResultsFromEventsGet);
+    app.post('/results/:id/:eventId', restrictedPages.isAuthed, controllers.events.resultsFromEventsPost)
 
+    //close an event
+    app.get('/results/closeevent:id', restrictedPages.isAuthed, controllers.events.closeEventPost)
     //profile
     app.get('/profile', restrictedPages.isAuthed, controllers.profile.profileGet)
 
+    //past events
+    app.get('/pastevents', restrictedPages.isAuthed, controllers.events.pastEventsGet);
+    app.get('/pastevents/details:id', restrictedPages.isAuthed, controllers.events.pastEventDetailGet);
+    
     app.all('*', (req, res) => {
         res.status(404);
         res.send('404 Not Found');

@@ -1,1 +1,33 @@
-<h1>this is profile page</h1>
+<div class="d-flex justify-content-center "><h1 class="transperant-background">Personal stats:</h1></div>
+<div class="d-flex justify-content-center ">    
+    <table class="table transperant-background my-form">
+    
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Name:</th>
+            <td>{{name}}</td>            
+        </tr>
+        
+        <tr>
+            <th scope="row">Balance:</th>
+            <td>{{personalBalance}}</td>            
+        </tr>
+        <tr>
+            <th scope="row">Total buy in:</th>
+            <td>{{totalBuyIn}}</td>            
+        </tr>
+        <tr>
+            <th scope="row">Total games:</th>
+            <td>{{totalGames}} <br><a href="/allgames:{{userId}}" class="badge badge-dark">Details</a></td>            
+        </tr>
+
+    </tbody>
+</table>
+</div>

@@ -1,12 +1,23 @@
-{{#each user}}
-<form action="/results{{_id}}" method="POST">
+<div class="container ">
+  <!-- Content here -->
+
+<h3>Game:<span class="badge badge-secondary">{{type}} played on {{eventdate}}</span></h3>
+
+{{#each usersMapped}}
+{{#unless itPart}}
+
+<form class=" transperant-background" action="/results/:{{userId}}/:{{eventId}}" class="prevent" method="POST">
 <div class="input-group event-form">
   <div class="input-group-prepend">
-    <span class="input-group-text" id="">{{firstName}} {{lastName}}</span>
+    <span class="input-group-text" id="">{{username}}</span>
   </div>  
-  <input type="text" class="form-control" placeholder="Buy-in" name="buyIn">
-  <input type="text" class="form-control" placeholder="Cash-out" name="cashOut">
-  <button type="submit" class="btn btn-primary mb-0">Submit results</button>
+  <input type="text" class="form-control bui-in" placeholder="Buy-in" name="buyIn">
+  <input type="text" class="form-control cash-out" placeholder="Cash-out" name="cashOut">
+  <input type="text" class="d-none" placeholder="eventId">
+  <button type="submit" class="btn btn-dark mb-0">Submit results</button>
 </div>
 </form>
+{{/unless}}
 {{/each}}
+<a href="/results/closeevent:{{_id}}" class="badge badge-dark">Close the event</a>
+</div>

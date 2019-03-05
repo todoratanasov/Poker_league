@@ -1,5 +1,7 @@
+
+<div class="d-flex justify-content-center">
 {{#each events}}
-<div class="card mx-auto" style="width: 18rem;">
+<div class="card mx-auto d-inline-block  transperant-background" style="width: 18rem;">
   <img class="card-img-top" src="https://ichef.bbci.co.uk/news/660/cpsprodpb/BF00/production/_103469884_mercbbc.jpg"
     alt="Card image cap">
   <div class="card-body">
@@ -7,7 +9,8 @@
       {{place}}'s residance.
     </p>
     <br>
-    <a href="/results/insertresults:{{_id}}" class="badge badge-primary">Enter results</a>
+    <a href="/results/insertresults:{{_id}}" class="badge badge-dark">Enter results</a>
   </div>
 </div>
 {{/each}}
+</div>

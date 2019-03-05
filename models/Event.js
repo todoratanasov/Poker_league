@@ -9,7 +9,8 @@ const eventSchema = new mongoose.Schema({
     users:[{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
     creator:{type:mongoose.Schema.Types.ObjectId, ref:"User", required:true},
     pastEvent:{type:mongoose.Schema.Types.Boolean, default:false},
-    results:[{type:mongoose.Schema.Types.ObjectId, ref:"Result"}]
+    results:[{type:mongoose.Schema.Types.ObjectId, ref:"Result"}],
+    participants:[{type:mongoose.Schema.Types.ObjectId, ref:"User"}]
 });
 
 const EventTable = mongoose.model('Event', eventSchema);

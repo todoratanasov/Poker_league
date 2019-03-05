@@ -1,6 +1,43 @@
-main{
-  padding-top: 70px;
- 
+html{
+  background-image: url("/images/945329.jpg");  
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center;background-size: cover;
+  height: 100%;
+  background-attachment: fixed;
+}
+body{
+  background-color: transparent;
+}
+main{ 
+  background-color: transparent;
+  padding-top: 70px;  
+  
+}
+.transperant-background{
+  margin: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2rem;
+  border-radius: 20px;  
+  box-shadow: 0px 0px 83px 21px rgba(59,58,59,1);
+}
+.radius{
+  border-radius: 500px;  
+  background-image: url("https://media.giphy.com/media/ApkjjvkvqY7za/giphy.gif");  
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+  background-position:center;  
+  box-shadow: 0px 0px 40px 22px rgba(0,0,0,1);
+}
+.main-title{
+  color: whitesmoke;
+  font-family: 'Rye', cursive;
+  
+}
+.sub-title{
+  color: whitesmoke;
+  font-family: 'Mrs Saint Delafield', cursive;
+  font-size: 60px;
 }
 .my-form{  
   width: 33vw;

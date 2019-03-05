@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center ">
+<table class="table transperant-background">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Place</th>
+            <th scope="col">Participants</th>
+            <th scope="col">Visit</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each allEvents}}
+        <tr>
+            <th scope="row">{{eventdate}}</th>
+            <td>{{place}}</td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Players
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {{#each participants}}
+                        <span class="dropdown-item">{{firstName}} {{lastName}}</span>
+                        {{/each}}
+                    </div>
+                </div>
+            </td>
+            <td>
+                <a class="btn btn-secondary" href="/pastevents/details:{{_id}}" role="button">View event</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</div>
