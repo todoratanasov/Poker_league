@@ -1,5 +1,5 @@
 const UserModel = require('../models/User');
-
+const ResultModel = require('../models/Results');
 module.exports = {
     profileGet:async (req, res)=>{
 
@@ -17,5 +17,18 @@ module.exports = {
             totalGames
         });
         
+    },
+    profileAllGamesGet:async (req,res)=>{
+        const userId = req.params.id.substr(1);
+        
+        const allGames = await ResultModel.find({
+            user:userId
+        })
+        .populate('event');
+
+        res.render('profile/profile-all-games', {allGames});
+        
+
+       
     }
 }

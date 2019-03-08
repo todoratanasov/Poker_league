@@ -39,6 +39,7 @@ module.exports = app => {
     app.get('/results/closeevent:id', restrictedPages.isAuthed, controllers.events.closeEventPost)
     //profile
     app.get('/profile', restrictedPages.isAuthed, controllers.profile.profileGet)
+    app.get('/profileallgames:id', restrictedPages.isAuthed, controllers.profile.profileAllGamesGet)
 
     //past events
     app.get('/pastevents', restrictedPages.isAuthed, controllers.events.pastEventsGet);
