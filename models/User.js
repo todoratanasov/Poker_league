@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema({
     hashedPass: { type: mongoose.Schema.Types.String, required: true },
     firstName: { type: mongoose.Schema.Types.String },
     lastName: { type: mongoose.Schema.Types.String },
+    email:{type: mongoose.Schema.Types.String},
+    picture:{type:mongoose.Schema.Types.String},
     salt: { type: mongoose.Schema.Types.String, required: true },
     event:[{type: mongoose.Schema.Types.ObjectId, ref:'Event'}],
     roles: [{ type: mongoose.Schema.Types.String }],

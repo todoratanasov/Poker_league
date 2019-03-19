@@ -17,6 +17,8 @@ module.exports = {
                 salt,
                 firstName: reqUser.firstName,
                 lastName: reqUser.lastName,
+                email:reqUser.email,
+                picture:reqUser.picture,
                 roles: ['User']
             });
             req.logIn(user, (err, user) => {
