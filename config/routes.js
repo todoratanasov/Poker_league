@@ -46,8 +46,9 @@ module.exports = app => {
     app.get('/pastevents/details:id', restrictedPages.isAuthed, controllers.events.pastEventDetailGet);
     
     app.all('*', (req, res) => {
-        res.status(404);
-        res.send('404 Not Found');
-        res.end();
+        res.render('alerts/big-alert', {
+            title:"Ooops - it's 404 Not Found",
+            content:"The url you're trying to reach does not exist!"
+    })
     });
 };

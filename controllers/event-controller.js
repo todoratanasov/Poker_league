@@ -129,7 +129,8 @@ module.exports = {
                 event,
                 user,
                 buyIn,
-                cashOut
+                cashOut,
+                totalPoints:0,
             })
             .then(async (result)=>{
 
@@ -160,14 +161,75 @@ module.exports = {
     closeEventPost:async (req,res)=>{
         
         let _id = req.params.id.substr(1);
+
         try{
-            const eventToClose = await EventModel.findById(_id);
+            const eventToClose = await EventModel.findById(_id)
+            .populate({path:"results",populate:{path:"user"}})
+            .populate({path:"participants"});
+            let totalSum = 0;
+            let totalParticipants = eventToClose.results.length;
+
+            let eventScore = eventToClose.results
+            .map((result)=>{
+                let userId = result.user._id;
+                let resultId = result._id;               
+                let eventTotal = result.cashOut - result.buyIn;  
+                if(eventTotal>=0){
+                    totalSum+=eventTotal
+                }              
+                return{
+                    resultId,
+                    userId,
+                    eventTotal,
+                    rankingPoints:0,
+                }
+            })
+            .sort((a,b)=>b.eventTotal - a.eventTotal)
+            .map(async (score,index)=>{                           
+                let userId = score.userId;                
+                let eventTotal=score.eventTotal;
+                let rankingPoints=score.rankingPoints;
+                if(eventTotal>0){
+                    rankingPoints += Number(((eventTotal/totalSum)*100).toFixed(2));
+                }else if(eventTotal<0){
+                    rankingPoints += Number(((eventTotal/totalSum)*100).toFixed(2));
+                }                
+                if(index===0){
+                    rankingPoints+=10
+                }
+                if(index===(totalParticipants-1)){
+                    rankingPoints-=10
+                }   
+                const resultDb = await ResultModel.findById({
+                    _id:score.resultId
+                });
+                resultDb.totalPoints = rankingPoints;
+                resultDb.save();
+
+                return{
+                    userId,
+                    eventTotal,
+                    rankingPoints
+                }
+            })
+
+            Promise.all(eventScore)
+            .then((x)=>{
+                x.forEach(async(obj)=>{                    
+                    let totalPoints = obj.rankingPoints;
+                    let userToUpdate = await UserModel.findById({_id:obj.userId});                             
+                    userToUpdate.totalPoints+=Number(totalPoints.toFixed(2));
+                    userToUpdate.save();
+                })
+            })
+            
+
             eventToClose.pastEvent = true;
             eventToClose.save();
             res.redirect('/');
         }
         catch(err){
-            console.log(`The error is from trying to close the event ${err}`)
+            console.log(`The error is from trying to close the event ${err}`);
         }
         
     },
@@ -197,13 +259,14 @@ module.exports = {
             const mappedUserStats = await event.results.map((x)=>{
                 let name = `${x.user.firstName} ${x.user.lastName}`
                 let buyIn=x.buyIn;
+                let rankingPoints = x.totalPoints;
                 let cashOut = x.cashOut-buyIn;
                 let balancePoints = ((+cashOut)*(0.01)).toFixed(2);                
                 let obj = {
                     name,
                     buyIn,
                     cashOut,
-                    rankingPoints:0,
+                    rankingPoints,
                     balancePoints
                 };
                 return obj;  

@@ -8,11 +8,12 @@ module.exports = {
         const personalBalance = req.user.personalBalance;
         const totalBuyIn = req.user.totalBuyIn;
         const totalGames = req.user.event.length;
-        
+        const totalPoints = req.user.totalPoints;
         res.render('profile/index-profile', {
             userId,
             name,
             personalBalance,
+            totalPoints,
             totalBuyIn,
             totalGames
         });

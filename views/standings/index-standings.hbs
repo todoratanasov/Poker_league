@@ -1,22 +1,25 @@
-<table class="table transperant-background">
-    <caption>List of users</caption>
+<div class="d-flex justify-content-center "><h1 class="transperant-background">Standings</h1></div>
+<div class="d-flex justify-content-center ">
+<table class="table transperant-background">    
     <thead>
         <tr>
             <th scope="col"></th>
             <th scope="col">Games</th>
-            <th scope="col">Bonus</th>
-            <th scope="col">Balance</th>
-            <th scope="col">Percentile</th>
+            <th scope="col">Total Buy In</th>
+            <th scope="col">Personal Balance</th>
+            <th scope="col">Total Points</th>
         </tr>
     </thead>
     <tbody>
+        {{#each mappedUsers}}
         <tr>
-            <th scope="row">Todor</th>
-            <td>5</td>
-            <td>20%</td>
-            <td>8165</td>
-            <td>153.09</td>
+            <th scope="row">{{name}}</th>
+            <td>{{games}}</td>
+            <td>{{buyIn}}</td>
+            <td>{{balance}}</td>
+            <td><strong>{{points}}</strong></td>
         </tr>
-
+        {{/each}}
     </tbody>
 </table>
+</div>
