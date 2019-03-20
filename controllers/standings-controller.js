@@ -1,6 +1,7 @@
 const UserModel = require('../models/User')
 
 module.exports = {
+    //rendering all users acording to their rank
     standingsGet: async (req,res)=>{
         try{
             const usersDb = await UserModel.find({

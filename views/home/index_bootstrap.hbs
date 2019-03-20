@@ -1,31 +1,19 @@
- <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron radius">
-        <div class="container">
-          <h1 class="display-1 main-header main-title">Casino lounge!</h1>
-          <p class="main-header sub-title">The league of champions!</p>          
-        </div>
-      </div>
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron radius">
+  <div class="container">
+    <h1 class="display-1 main-header main-title">Casino lounge!</h1>
+    <p class="main-header sub-title">The league of champions!</p>
+  </div>
+</div>
 
-      <div class="container">
-        <!-- Example row of columns -->
-        <div class="row">
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
-          </div>
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
-          </div>
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
-          </div>
-        </div>
-
-        <hr>
-
-      </div>
+<div class="d-flex justify-content-center cards-container">
+  {{#each mappedUsers}}
+  <div class="card custom-card">
+    <img src="{{picture}}" class="card-img-top" style="width: 10rem; height: 6rem" alt="{{name}}">
+    <span class="bottom-right">{{totalPoints}}%</span>
+    <div class="card-body" style="padding: 10px justify-content-center">
+      <h6 class="card-title text-picture">{{name}}</h6>
+    </div>
+  </div>  
+  {{/each}}
+</div>

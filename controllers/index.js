@@ -5,7 +5,7 @@ const rules = require('./rules-controller');
 const profile = require('./profile-controller');
 const standings = require('./standings-controller');
 const events = require('./event-controller');
-
+//exporting all controllers
 module.exports = {
     home,
     user,

@@ -1,30 +1,64 @@
 <div class="d-flex justify-content-center"><h1 class="transperant-background">Add Event</h1></div>
 <div class="d-flex justify-content-center ">
-<form class="event-form mx-auto transperant-background" action="/addevent/post" method="POST">  
+<form class="event-form mx-auto transperant-background" id="add-event" action="/addevent/post" method="POST">  
   <div class="form-group">
-    <label for="exampleFormControlSelect1">Type of the game</label>
-    <select class="form-control" id="exampleFormControlSelect1" name="type">
+    <label for="type">Type of the game</label>
+    <select class="form-control" id="type" name="type">
       <option value="cash">Cash table</option>
         <option value="tournament">Tournament</option>
     </select>
   </div>
   <div class="form-group">
-    <label for="exampleFormControlInput1">Date:</label>
-    <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Date" name="eventdate">
+    <label for="eventdate">Date:</label>
+    <input type="date" class="form-control" id="eventdate" placeholder="Date" name="eventdate">
   </div>
   <div class="form-group">
-    <label for="exampleFormControlInput1">Plase:</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Place"
+    <label for="address">Address of the event:</label>
+    <input type="text" class="form-control" id="address" placeholder="Address"
      name="place">
   </div> 
   <div class="form-group">
-    <label for="exampleFormControlInput1">Max players:</label>
-    <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Max players" name="maxplayers">
+    <label for="max-players">Max players:</label>
+    <input type="number" class="form-control" id="max-players" placeholder="Max players" name="maxplayers">
   </div> 
   <div class="form-group">
-    <label for="exampleFormControlInput1">Time:</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="00:00" name="time">
+    <label for="time">Time:</label>
+    <input type="text" class="form-control" id="time" placeholder="00:00" name="time">
   </div> 
-  <button type="submit" class="btn btn-dark">Add event</button>
+  <button type="submit" id="sub-button" class="btn btn-dark">Add event</button>
 </form>
 </div>
+<script>
+document.getElementById("add-event").addEventListener("submit",function(event){
+  let address = document.getElementById("address");
+  let eventdate = document.getElementById("eventdate");
+  let maxPlayers = document.getElementById("max-players");
+  let time = document.getElementById("time");
+
+  if(address.value===""){
+    address.classList.add("mystyle");
+    address.setAttribute("placeholder", "This field is required")
+    event.preventDefault;
+    event.stopPropagation;    
+  }
+  if(eventdate.value===""){
+    eventdate.classList.add("mystyle");
+    eventdate.setAttribute("placeholder", "This field is required")
+    event.preventDefault;
+    event.stopPropagation;    
+  }
+  if(maxPlayers.value===""){
+    maxPlayers.classList.add("mystyle");
+    maxPlayers.setAttribute("placeholder", "This field is required")
+    event.preventDefault;
+    event.stopPropagation;    
+  }
+  if(time.value===""){
+    time.classList.add("mystyle");
+    time.setAttribute("placeholder", "This field is required")
+    event.preventDefault;
+    event.stopPropagation;    
+  }
+
+})
+</script>

@@ -2,7 +2,9 @@ const EventModel = require('../models/Event');
 const UserModel = require('../models/User');
 const ResultModel = require('../models/Results');
 module.exports = {
+    //render all available events
     eventsGet: async (req, res) => {
+        //find only not past events
         const events = await EventModel.find({
             pastEvent: false,
         })
@@ -13,9 +15,7 @@ module.exports = {
                     res.render('alerts/no-events-in-db');
                     return;
                 }
-
-                let modifiedEvents = await events.forEach(async(singleEvent) => {
-                
+                let modifiedEvents = await events.forEach(async(singleEvent) => {                
                 let userId = req.user._id;
                 let usersArr = await singleEvent.users.map((x) => {
                     return x.toString();
@@ -26,11 +26,9 @@ module.exports = {
                 } else {
                     singleEvent.itParticipate = false;
                 }
-
                 let arrUsersId = singleEvent.users.map((userId) => {
                     return userId;
                 });
-
                 let usernames = await arrUsersId.map(async (_id) => {
                     let names = UserModel.findById({ _id })
                         .then(async (name) => {
@@ -41,18 +39,15 @@ module.exports = {
                 Promise.all(usernames)
                     .then((value) => {
                         singleEvent.newUsers = value;
-
                     })
                 })
-                res.render('events/index-events', { events });
-                
-
+                res.render('events/index-events', { events });  
             })
             .catch((err) => {
-                console.log(err)
+                console.log(`This is an error from getting all available events from DB`)
             })
-
     },
+    //participate in an event
     participatePost: (req, res) => {
         let userId = req.user._id;
         let _id = req.params.id.substr(1);
@@ -67,6 +62,7 @@ module.exports = {
                 console.log(`This is error from retreiving an event ${err}`)
             })
     },
+    //rendering all participants in an event
     resultsFromEventsGet: async (req, res) => {
         EventModel.find(({
             pastEvent: false,
@@ -79,9 +75,10 @@ module.exports = {
             })
         
     },
+    //retreiving the info regarding the event and users that participate int the event
     insertResultsFromEventsGet: (req, res) => {
+        //event ID
         let _id = req.params.id.substr(1);
-
         EventModel.findById(_id)
             .populate({path:'users'})
             .then((event)=>{
@@ -89,8 +86,8 @@ module.exports = {
                 let eventParticipants = event.participants.map((x)=>{
                     let idToString = x.toString();
                     return idToString;
-                });      
-                
+                });
+                //preparing the rendering
                 let usersMapped = event.users.map((user)=>{
                     let userId = user._id;//this is an object
                     if(!eventParticipants.includes(userId.toString())){
@@ -118,12 +115,12 @@ module.exports = {
                 console.log(`The error is getting the users from DB to display results ${err}`)
             })
     },
+    //entering result from an event in DB using the model and in user's personal BD record
     resultsFromEventsPost:async (req,res)=>{        
         let user = req.params.id.substr(1);
         let event = req.params.eventId.substr(1);
         const buyIn = +req.body.buyIn;
-        const cashOut = +req.body.cashOut;   
-        
+        const cashOut = +req.body.cashOut;
         try{
             const result = await ResultModel.create({
                 event,
@@ -133,19 +130,16 @@ module.exports = {
                 totalPoints:0,
             })
             .then(async (result)=>{
-
                 const resultId = result._id;                
                 const userDb = await UserModel.findById(user);               
                 let cashBuyBalance = Number(((cashOut-buyIn)*0.01).toFixed(2));                
                 const balance =(userDb.personalBalance)+cashBuyBalance;
                 const totalBuyIn = userDb.totalBuyIn + buyIn;
-
                 userDb.totalBuyIn = totalBuyIn;
                 userDb.personalBalance = balance;                
                 userDb.event.push(event);
                 userDb.results.push(resultId);
                 await userDb.save();
-
                 const eventDb = await EventModel.findById(event);
                 eventDb.results.push(resultId);
                 eventDb.participants.push(user);
@@ -154,21 +148,19 @@ module.exports = {
             })
         }
         catch(err){
-            console.log(`This error is from freating a result in DB ${err}`)
+            console.log(`This error is from creating a result in DB ${err}`)
         }
         
     },
-    closeEventPost:async (req,res)=>{
-        
+    //making an event "past"
+    closeEventPost:async (req,res)=>{        
         let _id = req.params.id.substr(1);
-
         try{
             const eventToClose = await EventModel.findById(_id)
             .populate({path:"results",populate:{path:"user"}})
             .populate({path:"participants"});
             let totalSum = 0;
             let totalParticipants = eventToClose.results.length;
-
             let eventScore = eventToClose.results
             .map((result)=>{
                 let userId = result.user._id;
@@ -205,14 +197,12 @@ module.exports = {
                 });
                 resultDb.totalPoints = rankingPoints;
                 resultDb.save();
-
                 return{
                     userId,
                     eventTotal,
                     rankingPoints
                 }
             })
-
             Promise.all(eventScore)
             .then((x)=>{
                 x.forEach(async(obj)=>{                    
@@ -222,19 +212,16 @@ module.exports = {
                     userToUpdate.save();
                 })
             })
-            
-
             eventToClose.pastEvent = true;
             eventToClose.save();
             res.redirect('/');
         }
         catch(err){
             console.log(`The error is from trying to close the event ${err}`);
-        }
-        
+        }        
     },
-    pastEventsGet:async (req,res)=>{
-        
+    //rendering all "past" events
+    pastEventsGet:async (req,res)=>{        
         try{
             const allEvents = await EventModel.find({
                 pastEvent:true
@@ -242,20 +229,17 @@ module.exports = {
             .populate({ path: 'participants'})
             
             res.render('events/past-events', {allEvents})
-
         }
         catch(err){
             console.log(`This is an error trying to retreive events from db ${err}`)
-        }
-        
+        }        
     },
+    //rendering the details of a "past" event
     pastEventDetailGet:async (req,res)=>{
         const eventId = req.params.id.substr(1);
-
         try{
             const event = await EventModel.findById({_id:eventId})
-                .populate({path:'results', populate:{path:'user'}})
-                
+                .populate({path:'results', populate:{path:'user'}});                
             const mappedUserStats = await event.results.map((x)=>{
                 let name = `${x.user.firstName} ${x.user.lastName}`
                 let buyIn=x.buyIn;

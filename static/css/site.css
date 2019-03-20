@@ -14,6 +14,31 @@ main{
   padding-top: 70px;  
   
 }
+.custom-card{  
+  position: relative;
+  font-family: 'Rye', cursive;
+  color: whitesmoke;
+  background-color: rgba(56, 56, 56, 0.466);
+  width: 9rem;
+  border-radius: 50px; 
+  overflow: hidden;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+   -webkit-box-shadow: inset 0 0 10px #000000;
+   box-shadow:         inset 0 0 50px #000000;
+}
+.bottom-right {
+  color: whitesmoke;  
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  border-radius: 50px; 
+  -moz-box-shadow:    inset 0 0 10px #000000;
+   -webkit-box-shadow: inset 0 0 10px #000000;
+   box-shadow:         inset 0 0 50px #000000;
+}
+.text-picture{
+  text-align: center;
+}
 .transperant-background{
   margin: 20px;
   background: rgba(255, 255, 255, 0.7);
@@ -57,3 +82,7 @@ main{
   color:black;
 }
 
+.mystyle{
+  background-color:rgb(245, 106, 106);
+  color: whitesmoke;
+}

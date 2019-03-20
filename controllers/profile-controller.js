@@ -1,8 +1,8 @@
 const UserModel = require('../models/User');
 const ResultModel = require('../models/Results');
 module.exports = {
+    //rendering user's stats from the database
     profileGet:async (req, res)=>{
-
         const userId = req.user._id;
         const name = `${req.user.firstName} ${req.user.lastName}`;
         const personalBalance = req.user.personalBalance;
@@ -16,20 +16,15 @@ module.exports = {
             totalPoints,
             totalBuyIn,
             totalGames
-        });
-        
+        });        
     },
+    //rendering all games that user participates
     profileAllGamesGet:async (req,res)=>{
-        const userId = req.params.id.substr(1);
-        
+        const userId = req.params.id.substr(1);        
         const allGames = await ResultModel.find({
             user:userId
         })
         .populate('event');
-
         res.render('profile/profile-all-games', {allGames});
-        
-
-       
     }
 }

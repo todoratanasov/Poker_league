@@ -2,9 +2,11 @@ const encryption = require('../util/encryption');
 const User = require('mongoose').model('User');
 
 module.exports = {
+    //rendering register view
     registerGet: (req, res) => {
         res.render('users/register');
     },
+    //creating a user in the database
     registerPost: async (req, res) => {
         const reqUser = req.body;
         const salt = encryption.generateSalt();
@@ -34,7 +36,7 @@ module.exports = {
             res.locals.globalError = e;
             res.render('users/register');
         }
-    },
+    },    
     logout: (req, res) => {
         req.logout();
         res.redirect('/');

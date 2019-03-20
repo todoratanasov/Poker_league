@@ -22,9 +22,8 @@ userSchema.method({
         return encryption.generateHashedPassword(this.salt, password) === this.hashedPass;
     }
 });
-
 const User = mongoose.model('User', userSchema);
-
+//creating a Admin user if one does not presents
 User.seedAdminUser = async () => {
     try {
         let users = await User.find();
@@ -41,5 +40,4 @@ User.seedAdminUser = async () => {
         console.log(e);
     }
 };
-
 module.exports = User;

@@ -22,21 +22,21 @@ module.exports = app => {
 
     //add event
     app.get('/addevent', restrictedPages.isAuthed, controllers.addEvent.addEventGet);
-    app.post('/addevent/post', restrictedPages.isAuthed, controllers.addEvent.addEventPost)
+    app.post('/addevent/post', restrictedPages.isAuthed, restrictedPages.isTest,controllers.addEvent.addEventPost)
 
     //participate in event
-    app.post('/participate:id', restrictedPages.isAuthed, controllers.events.participatePost)
+    app.post('/participate:id', restrictedPages.isAuthed, restrictedPages.isTest,controllers.events.participatePost)
 
     //rules
-    app.get('/rules', controllers.rules.rulesGet);
+    app.get('/rules',  controllers.rules.rulesGet);
 
     //results
     app.get('/results', restrictedPages.isAuthed, controllers.events.resultsFromEventsGet)
     app.get('/results/insertresults:id', restrictedPages.isAuthed, controllers.events.insertResultsFromEventsGet);
-    app.post('/results/:id/:eventId', restrictedPages.isAuthed, controllers.events.resultsFromEventsPost)
+    app.post('/results/:id/:eventId', restrictedPages.isAuthed, restrictedPages.isTest,controllers.events.resultsFromEventsPost)
 
     //close an event
-    app.get('/results/closeevent:id', restrictedPages.isAuthed, controllers.events.closeEventPost)
+    app.get('/results/closeevent:id', restrictedPages.isAuthed, restrictedPages.isTest,controllers.events.closeEventPost)
     //profile
     app.get('/profile', restrictedPages.isAuthed, controllers.profile.profileGet)
     app.get('/profileallgames:id', restrictedPages.isAuthed, controllers.profile.profileAllGamesGet)

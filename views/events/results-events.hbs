@@ -7,13 +7,13 @@
 {{#each usersMapped}}
 {{#unless itPart}}
 
-<form class=" transperant-background" action="/results/:{{userId}}/:{{eventId}}" class="prevent" method="POST">
+<form class=" transperant-background" id="result-form"action="/results/:{{userId}}/:{{eventId}}" method="POST">
 <div class="input-group event-form">
   <div class="input-group-prepend">
     <span class="input-group-text" id="">{{username}}</span>
   </div>  
-  <input type="text" class="form-control bui-in" placeholder="Buy-in" name="buyIn">
-  <input type="text" class="form-control cash-out" placeholder="Cash-out" name="cashOut">
+  <input type="text" class="form-control bui-in" placeholder="Buy-in" id="buy-in" name="buyIn">
+  <input type="text" class="form-control cash-out" placeholder="Cash-out" id="cash-out" name="cashOut">
   <input type="text" class="d-none" placeholder="eventId">
   <button type="submit" class="btn btn-dark mb-0">Submit results</button>
 </div>
@@ -22,3 +22,22 @@
 {{/each}}
 <a href="/results/closeevent:{{_id}}" class="badge badge-dark">Close the event</a>
 </div>
+<script>
+  document.getElementById("result-form").addEventListener("submit",function(event){
+    let buyIn = document.getElementById("buy-in");
+    let cashOut = document.getElementById("cash-out")
+
+    if(buyIn.value===""){
+    buyIn.classList.add("mystyle");
+    buyIn.setAttribute("placeholder", "This field is required")
+    event.preventDefault;
+    event.stopPropagation;    
+  }
+  if(cashOut.value===""){
+    cashOut.classList.add("mystyle");
+    cashOut.setAttribute("placeholder", "This field is required")
+    event.preventDefault;
+    event.stopPropagation;    
+  }
+  })
+</script>
