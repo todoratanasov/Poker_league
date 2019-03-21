@@ -21,9 +21,8 @@ module.exports={
           BR<br>
           Casinolounge event team</p>`      
           let mailOptions = {
-            from: '"Casinolounge" <noreply@casinolounge.eu>', // sender address
-            //tosso1@abv.bg, rusiqt_84@abv.bg, casidoo@yahoo.co.uk, i.mantchev@gmail.com, rosen.dobrev@virgin.bg, iv.maslarov@gmail.com, stivi2610@abv.bg, javor.davidkov@gmail.com
-            to: "tosso1@abv.bg", 
+            from: '"Casinolounge" <noreply@casinolounge.eu>',
+            to: "tosso1@abv.bg, rusiqt_84@abv.bg, casidoo@yahoo.co.uk, i.mantchev@gmail.com, rosen.dobrev@virgin.bg, iv.maslarov@gmail.com, stivi2610@abv.bg, javor.davidkov@gmail.com", 
             subject: `The registration for the next stage on ${objParams.eventdate} is available.`, 
             text: ``,
             html: text,

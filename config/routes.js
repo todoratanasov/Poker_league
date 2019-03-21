@@ -33,10 +33,10 @@ module.exports = app => {
     //results
     app.get('/results', restrictedPages.isAuthed, controllers.events.resultsFromEventsGet)
     app.get('/results/insertresults:id', restrictedPages.isAuthed, controllers.events.insertResultsFromEventsGet);
-    app.post('/results/:id/:eventId', restrictedPages.isAuthed, restrictedPages.isTest,controllers.events.resultsFromEventsPost)
+    app.post('/results/:id/:eventId', restrictedPages.isAuthed, restrictedPages.hasRole('Boss'),restrictedPages.isTest,controllers.events.resultsFromEventsPost)
 
     //close an event
-    app.get('/results/closeevent:id', restrictedPages.isAuthed, restrictedPages.isTest,controllers.events.closeEventPost)
+    app.get('/results/closeevent:id', restrictedPages.isAuthed, restrictedPages.isTest, restrictedPages.hasRole('Boss'), controllers.events.closeEventPost)
     //profile
     app.get('/profile', restrictedPages.isAuthed, controllers.profile.profileGet)
     app.get('/profileallgames:id', restrictedPages.isAuthed, controllers.profile.profileAllGamesGet)

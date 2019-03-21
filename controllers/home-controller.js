@@ -10,7 +10,7 @@ module.exports = {
             //retreiving all users an their stats for the homepage's small profiles and sortng them by rank
             const mappedUsers = await users.map((usersDb)=>{
                 let name = `${usersDb.firstName} ${usersDb.lastName}`;
-                let totalPoints = usersDb.totalPoints;
+                let totalPoints = usersDb.totalPoints.toFixed(2);
                 let picture = usersDb.picture;
                 let totalBuyIn = usersDb.totalBuyIn;
                 let obj = {

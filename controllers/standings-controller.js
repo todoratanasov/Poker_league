@@ -12,8 +12,8 @@ module.exports = {
                 let name = `${user.firstName} ${user.lastName}`;
                 let games = user.results.length;                
                 let buyIn = user.totalBuyIn;                
-                let balance = user.personalBalance;
-                let points = user.totalPoints;
+                let balance = user.personalBalance.toFixed(2);
+                let points = user.totalPoints.toFixed(2);
                 return{
                     name,
                     games,
