@@ -5,10 +5,10 @@ module.exports = {
     profileGet:async (req, res)=>{
         const userId = req.user._id;
         const name = `${req.user.firstName} ${req.user.lastName}`;
-        const personalBalance = req.user.personalBalance;
+        const personalBalance = req.user.personalBalance.toFixed(2);
         const totalBuyIn = req.user.totalBuyIn;
         const totalGames = req.user.event.length;
-        const totalPoints = req.user.totalPoints;
+        const totalPoints = req.user.totalPoints.toFixed(2);
         res.render('profile/index-profile', {
             userId,
             name,
@@ -24,7 +24,9 @@ module.exports = {
         const allGames = await ResultModel.find({
             user:userId
         })
-        .populate('event');
+        .populate('event')
+        .sort({event:"desc"})
+        
         res.render('profile/profile-all-games', {allGames});
     }
 }

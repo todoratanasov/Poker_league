@@ -5,7 +5,7 @@ module.exports = {
     //render all available events
     eventsGet: async (req, res) => {
         //find only not past events
-        const events = await EventModel.find({
+        const eventsF = await EventModel.find({
             pastEvent: false,
         })
             .populate('creator')
@@ -15,37 +15,47 @@ module.exports = {
                     res.render('alerts/no-events-in-db');
                     return;
                 }
-                let modifiedEvents = await events.forEach(async(singleEvent) => {                
                 let userId = req.user._id;
-                let usersArr = await singleEvent.users.map((x) => {
+                let modifiedEvents = await events.map(async(singleEvent) => {
+                    let obj={};
+                    obj.eventdate = singleEvent.eventdate;
+                    obj.time = singleEvent.time;
+                    obj.place = singleEvent.place;
+                    obj._id = singleEvent._id;
+                    let usersArr = await singleEvent.users.map((x) => {
                     return x.toString();
-                })
+                    })
+                
                 if (usersArr.includes(userId.toString())) {
-
-                    singleEvent.itParticipate = true;
+                    obj.itParticipate = true;
                 } else {
-                    singleEvent.itParticipate = false;
+                    obj.itParticipate = false;
                 }
-                let arrUsersId = singleEvent.users.map((userId) => {
+                let arrUsersId = await singleEvent.users.map((userId) => {
                     return userId;
                 });
                 let usernames = await arrUsersId.map(async (_id) => {
                     let names = UserModel.findById({ _id })
                         .then(async (name) => {
-                            return await name.username
+                            return await `${name.firstName} ${name.lastName}`;
                         })
                     return await names;
                 })
-                Promise.all(usernames)
+                await Promise.all(usernames)
                     .then((value) => {
-                        singleEvent.newUsers = value;
+                        obj.newUsers = value;
                     })
-                })
-                res.render('events/index-events', { events });  
+                    return await obj;
+                });    
+                Promise.all(modifiedEvents)
+                .then((valueDb)=>{
+                    res.render('events/index-events', { events:valueDb }); 
+                })                
             })
             .catch((err) => {
                 console.log(`This is an error from getting all available events from DB`)
-            })
+            });
+             
     },
     //participate in an event
     participatePost: (req, res) => {
@@ -220,13 +230,14 @@ module.exports = {
             console.log(`The error is from trying to close the event ${err}`);
         }        
     },
-    //rendering all "past" events
+    //rendering all "past" events in desc order
     pastEventsGet:async (req,res)=>{        
         try{
             const allEvents = await EventModel.find({
                 pastEvent:true
             })
             .populate({ path: 'participants'})
+            .sort({eventdate:"desc"});
             
             res.render('events/past-events', {allEvents})
         }
