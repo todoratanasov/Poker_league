@@ -2,6 +2,8 @@
 
 This is a small website for a noncommercial, closed user poker group.
 
+![Homepage view](/casino_lounge.png)
+
 #### Starting the app
 
 1. Visit -  [http://www.casinolounge.eu/]
